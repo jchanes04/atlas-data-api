@@ -20,7 +20,7 @@ export default class Database {
         return this.cluster.options
     }
 
-    collection(collectionName: string) {
-        return new Collection(this, collectionName)
+    collection<D = Document>(collectionName: string) {
+        return new Collection<D>(this, collectionName)
     }
 }
