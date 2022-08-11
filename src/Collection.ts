@@ -189,45 +189,45 @@ export default class Collection<D = Document> {
         return res.json() as Promise<T>
     }
 
-    public async findOne<T = D>(params: FindOneParams<T>): Promise<FindOneResponse<T>> {
+    public async findOne<T extends D>(params: FindOneParams<T>): Promise<FindOneResponse<T>> {
         return this.$action(Action.FindOne, params)
     }
 
-    public async find<T = D>(params: FindParams<T>): Promise<FindResponse<T>> {
+    public async find<T extends D>(params: FindParams<T>): Promise<FindResponse<T>> {
         return this.$action(Action.Find, params)
     }
 
-    public async insertOne<T = D>(params: InsertOneParams<T>): Promise<InsertOneResponse> {
+    public async insertOne<T extends D>(params: InsertOneParams<T>): Promise<InsertOneResponse> {
         return this.$action(Action.InsertOne, params)
     }
 
-    public async insertMany<T = D>(params: InsertManyParams<T>): Promise<InsertManyResponse> {
+    public async insertMany<T extends D>(params: InsertManyParams<T>): Promise<InsertManyResponse> {
         return this.$action(Action.InsertMany, params)
     }
 
-    public async updateOne<T = D>(params: UpdateOneNoUpsertParams<T>): Promise<UpdateOneNoUpsertResponse>
-    public async updateOne<T = D>(params: UpdateOneUpsertParams<T>): Promise<UpdateOneUpsertResponse>
+    public async updateOne<T extends D>(params: UpdateOneNoUpsertParams<T>): Promise<UpdateOneNoUpsertResponse>
+    public async updateOne<T extends D>(params: UpdateOneUpsertParams<T>): Promise<UpdateOneUpsertResponse>
     public async updateOne(params: any): Promise<any> {
         return this.$action(Action.UpdateOne, params)
     }
 
-    public async updateMany<T = D>(params: UpdateManyNoUpsertParams<T>): Promise<UpdateManyNoUpsertResponse>
-    public async updateMany<T = D>(params: UpdateManyUpsertParams<T>): Promise<UpdateManyUpsertResponse>
+    public async updateMany<T extends D>(params: UpdateManyNoUpsertParams<T>): Promise<UpdateManyNoUpsertResponse>
+    public async updateMany<T extends D>(params: UpdateManyUpsertParams<T>): Promise<UpdateManyUpsertResponse>
     public async updateMany(params: any): Promise<any> {
         return this.$action(Action.UpdateMany, params)
     }
 
-    public async replaceOne<T = D>(params: ReplaceOneNoUpsertParams<T>): Promise<ReplaceOneNoUpsertResponse>
-    public async replaceOne<T = D>(params: ReplaceOneUpsertParams<T>): Promise<ReplaceOneUpsertResponse>
+    public async replaceOne<T extends D>(params: ReplaceOneNoUpsertParams<T>): Promise<ReplaceOneNoUpsertResponse>
+    public async replaceOne<T extends D>(params: ReplaceOneUpsertParams<T>): Promise<ReplaceOneUpsertResponse>
     public async replaceOne(params: any): Promise<any> {
         return this.$action(Action.ReplaceOne, params)
     }
 
-    public async deleteOne<T = D>(params: DeleteOneParams<T>): Promise<DeleteOneResponse> {
+    public async deleteOne<T extends D>(params: DeleteOneParams<T>): Promise<DeleteOneResponse> {
         return this.$action(Action.DeleteOne, params)
     }
 
-    public async deleteMany<T = D>(params: DeleteManyParams<T>): Promise<DeleteManyResponse> {
+    public async deleteMany<T extends D>(params: DeleteManyParams<T>): Promise<DeleteManyResponse> {
         return this.$action(Action.DeleteMany, params)
     }
 
