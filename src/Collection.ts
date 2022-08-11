@@ -1,30 +1,30 @@
-import fetch from 'node-fetch'
+import fetch from "node-fetch"
 import Database from "./Database"
-import { Document, Filter, Projection, Sort, UpdateFilter } from './MongoDataAPI'
+import { Document, Filter, Projection, Sort, UpdateFilter } from "./MongoDataAPI"
 
 export enum Action {
-    FindOne = 'findOne',
-    Find = 'find',
-    InsertOne = 'insertOne',
-    InsertMany = 'insertMany',
-    UpdateOne = 'updateOne',
-    UpdateMany = 'updateMany',
-    ReplaceOne = 'replaceOne',
-    DeleteOne = 'deleteOne',
-    DeleteMany = 'deleteMany',
-    Aggregate = 'aggregate'
+    FindOne = "findOne",
+    Find = "find",
+    InsertOne = "insertOne",
+    InsertMany = "insertMany",
+    UpdateOne = "updateOne",
+    UpdateMany = "updateMany",
+    ReplaceOne = "replaceOne",
+    DeleteOne = "deleteOne",
+    DeleteMany = "deleteMany",
+    Aggregate = "aggregate",
 }
 
 export type FindOneParams<T = Document> = {
-    filter?: Filter<T>,
+    filter?: Filter<T>
     projection?: Projection<T>
 }
 
 export type FindParams<T = Document> = {
-    filter?: Filter<T>,
-    projection?: Projection<T>,
-    sort?: Sort,
-    limit?: number,
+    filter?: Filter<T>
+    projection?: Projection<T>
+    sort?: Sort
+    limit?: number
     skip?: number
 }
 
@@ -45,81 +45,81 @@ export type InsertManyResponse = {
 }
 
 type UpdateOneNoUpsertParams<T = Document> = {
-    filter: Filter<T>,
-    update: UpdateFilter<T>,
+    filter: Filter<T>
+    update: UpdateFilter<T>
     upsert?: false
 }
 
 type UpdateOneUpsertParams<T = Document> = {
-    filter: Filter<T>,
-    update: UpdateFilter<T>,
+    filter: Filter<T>
+    update: UpdateFilter<T>
     upsert: true
 }
 
 export type UpdateOneParams<T = Document> = UpdateOneNoUpsertParams<T> | UpdateOneUpsertParams<T>
 
 type UpdateOneNoUpsertResponse = {
-    matchedCount: number,
+    matchedCount: number
     modifiedCount: number
 }
 
 type UpdateOneUpsertResponse = {
-    matchedCount: number,
-    modifiedCount: number,
+    matchedCount: number
+    modifiedCount: number
     upsertedId: string
 }
 
 export type UpdateOneResponse = UpdateOneNoUpsertResponse | UpdateOneUpsertResponse
 
 type UpdateManyNoUpsertParams<T = Document> = {
-    filter: Filter<T>,
-    update: UpdateFilter<T>,
+    filter: Filter<T>
+    update: UpdateFilter<T>
     upsert?: false
 }
 
 type UpdateManyUpsertParams<T = Document> = {
-    filter: Filter<T>,
-    update: UpdateFilter<T>,
+    filter: Filter<T>
+    update: UpdateFilter<T>
     upsert: true
 }
 
 export type UpdateManyParams<T = Document> = UpdateManyNoUpsertParams<T> | UpdateManyUpsertParams<T>
 
 type UpdateManyNoUpsertResponse = {
-    matchedCount: number,
+    matchedCount: number
     modifiedCount: number
 }
 
 type UpdateManyUpsertResponse = {
-    matchedCount: number,
-    modifiedCount: number,
+    matchedCount: number
+    modifiedCount: number
     upsertedId: string
 }
 
 export type UpdateManyResponse = UpdateManyNoUpsertResponse | UpdateManyUpsertResponse
 
 type ReplaceOneNoUpsertParams<T = Document, U = Document> = {
-    filter: Filter<T>,
-    replacement: U,
+    filter: Filter<T>
+    replacement: U
     upsert?: false
 }
 
 type ReplaceOneUpsertParams<T = Document, U = Document> = {
-    filter: Filter<T>,
-    replacement: U,
+    filter: Filter<T>
+    replacement: U
     upsert: true
 }
 
 export type ReplaceOneParams<T = Document, U = Document> = ReplaceOneNoUpsertParams<T, U> | ReplaceOneUpsertParams<T, U>
 
 type ReplaceOneNoUpsertResponse = {
-    matchedCount: number,
+    matchedCount: number
     modifiedCount: number
 }
 
 type ReplaceOneUpsertResponse = {
-    matchedCount: number,
-    modifiedCount: number,
+    matchedCount: number
+    modifiedCount: number
     upsertedId: string
 }
 
@@ -156,7 +156,7 @@ export default class Collection<D = Document> {
 
     constructor(db: Database, collectionName: string) {
         if (typeof collectionName !== "string") throw new Error("Collection Name must be a string")
-        
+
         this.db = db
         this.collectionName = collectionName
     }
@@ -173,10 +173,10 @@ export default class Collection<D = Document> {
     public async $action<T = unknown>(name: Action, params: Record<string, any>): Promise<T> {
         const res = await fetch(`${this.db.cluster.api.url}/action/${name}`, {
             headers: {
-                'Content-Type': 'application/' + this.options.responseType,
-                'api-key': this.api.key
+                "Content-Type": "application/" + this.options.responseType,
+                "api-key": this.api.key,
             },
-            body: JSON.stringify(params)
+            body: JSON.stringify(params),
         })
         return res.json() as Promise<T>
     }

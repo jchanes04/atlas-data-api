@@ -1,13 +1,13 @@
-import type { Filter, FindOptions, Sort, UpdateFilter, Document } from 'mongodb'
-import Cluster from './Cluster'
+import type { Filter, FindOptions, Sort, UpdateFilter, Document } from "mongodb"
+import Cluster from "./Cluster"
 
 export { Filter, FindOptions, Sort, UpdateFilter, Document }
 
 export enum Region {
-    Virginia = 'us-east-1',
-    Oregon = 'us-west-2',
-    Ireland = 'eu-west-1',
-    Sydney = 'ap-southeast-2'
+    Virginia = "us-east-1",
+    Oregon = "us-west-2",
+    Ireland = "eu-west-1",
+    Sydney = "ap-southeast-2",
 }
 
 type IncludeProjection<T = Document> = {
@@ -21,19 +21,19 @@ type ExcludeProjection<T = Document> = {
 export type Projection<T = Document> = IncludeProjection<T> | ExcludeProjection<T>
 
 interface APIBaseOptions {
-    key: string,
-    responseType?: 'json' | 'ejson'
+    key: string
+    responseType?: "json" | "ejson"
 }
 
 interface APIOptionsWithoutURL extends APIBaseOptions {
-    id: string,
-    region?: Region,
+    id: string
+    region?: Region | `${Region}`
     url?: never
 }
 
 interface APIOptionsWithURL extends APIBaseOptions {
-    id?: never,
-    region?: never,
+    id?: never
+    region?: never
     url: string
 }
 
@@ -53,13 +53,14 @@ export default class MongoDataAPI {
 
         if (typeof id !== "string" && typeof id !== "undefined") throw new Error("ID must be a string")
         if (typeof url !== "string" && typeof url !== "undefined") throw new Error("URL must be a string")
-        if (typeof region !== "string" && typeof region !== "undefined") throw new Error("Region must be one of the following: " + Object.values(Region).join(", "))
-        if (typeof region === "string" && !Object.values(Region).includes(region)) throw new Error("Region must be one of the following: " + Object.values(Region).join(", "))
+        if (typeof region !== "string" && typeof region !== "undefined")
+            throw new Error("Region must be one of the following: " + Object.values(Region).join(", "))
+        if (typeof region === "string" && ![...Object.values(Region), `${Region}`].includes(region))
+            throw new Error("Region must be one of the following: " + Object.values(Region).join(", "))
 
         if (typeof id !== "string" && typeof url !== "string") throw new Error("Either ID or URL is required")
         if (typeof id === "string" && typeof url === "string") throw new Error("ID cannot be used with URL")
         if (typeof region === "string" && typeof url === "string") throw new Error("Region cannot be used with URL")
-        if (typeof region === "string" && typeof id !== "string") throw new Error("Region cannot be used without ID")
 
         if (url) {
             this.url = url

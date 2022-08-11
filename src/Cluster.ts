@@ -7,7 +7,7 @@ export default class Cluster {
 
     constructor(api: MongoDataAPI, clusterName: string) {
         if (typeof clusterName !== "string") throw new Error("Cluster Name must be a string")
-        
+
         this.api = api
         this.clusterName = clusterName
     }
