@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
-import Database from "./Database"
-import { Document, Filter, Projection, Sort, UpdateFilter } from "./MongoDataAPI"
+import Database from "./Database.js"
+import { Document, Filter, Projection, Sort, UpdateFilter } from "./MongoDataAPI.js"
 
 export enum Action {
     FindOne = "findOne",

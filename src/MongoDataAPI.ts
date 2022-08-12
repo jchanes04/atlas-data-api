@@ -1,5 +1,5 @@
 import type { Filter, FindOptions, Sort, UpdateFilter, Document } from "mongodb"
-import Cluster from "./Cluster"
+import Cluster from "./Cluster.js"
 
 export { Filter, FindOptions, Sort, UpdateFilter, Document }
 

@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "module": "ES2015",
-        "moduleResolution": "node",
+        "moduleResolution": "nodeNext",
         "declaration": true,
         "outDir": "./lib",
         "strict": true

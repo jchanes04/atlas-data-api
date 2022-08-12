@@ -1,5 +1,5 @@
-import Database from "./Database"
-import MongoDataAPI from "./MongoDataAPI"
+import Database from "./Database.js"
+import MongoDataAPI from "./MongoDataAPI.js"
 
 export default class Cluster {
     readonly api: MongoDataAPI

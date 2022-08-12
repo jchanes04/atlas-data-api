@@ -1,5 +1,5 @@
-import MongoDataAPI, { Filter, FindOptions, Sort, UpdateFilter, Document } from "./MongoDataAPI"
+import MongoDataAPI, { Filter, FindOptions, Sort, UpdateFilter, Document } from "./MongoDataAPI.js"
 export default MongoDataAPI
 export { Filter, FindOptions, Sort, UpdateFilter, Document }
 
-export { Action, FindOneParams } from "./Collection"
+export * from "./Collection.js"

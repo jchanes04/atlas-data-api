@@ -1,5 +1,5 @@
-import Collection from "./Collection"
-import Cluster from "./Cluster"
+import Collection from "./Collection.js"
+import Cluster from "./Cluster.js"
 
 export default class Database {
     readonly cluster: Cluster
