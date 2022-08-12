@@ -180,6 +180,7 @@ export default class Collection<D = Document> {
     // TODO: fetch options
     public async $action<T = unknown>(name: Action, params: Record<string, any>): Promise<T> {
         const res = await fetch(`${this.db.cluster.api.url}/action/${name}`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/" + this.options.responseType,
                 "api-key": this.api.key,
