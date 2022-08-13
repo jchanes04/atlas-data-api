@@ -173,21 +173,32 @@ export default class Collection<D = Document> {
         return this.db.api
     }
 
+    get cluster() {
+        return this.db.cluster
+    }
+
     get options() {
         return this.db.options
     }
 
     // TODO: fetch options
     public async $action<T = unknown>(name: Action, params: Record<string, any>): Promise<T> {
-        const res = await fetch(`${this.db.cluster.api.url}/action/${name}`, {
+        const res = await fetch(`${this.api.url}/action/${name}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/" + this.options.responseType,
                 "api-key": this.api.key,
             },
-            body: JSON.stringify(params),
+            body: JSON.stringify({
+                dataSource: this.cluster.clusterName,
+                database: this.db.dbName,
+                collection: this.collectionName,
+                ...params
+            }),
         })
-        return res.json() as Promise<T>
+        const result = await res.json()
+        console.log(result)
+        return result as Promise<T>
     }
 
     public async findOne<T extends D>(params: FindOneParams<T>): Promise<FindOneResponse<T>> {
